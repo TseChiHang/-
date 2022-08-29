@@ -21,10 +21,10 @@ def slot_match_0(text):
         for i in range(length):
             item=str(cities[i][0])
             if(re.search(item,text)!=None):
-                for j in cities[i]:
-                    if(((re.search(str(j),text)!=None)and str(j)!=item )or((re.search(str(j),text)!=None) and item == str(cities[i][1]))):
+                for j in range(1,len(cities[i])):
+                    if(re.search(str(cities[i][j]),text)!=None):
                         city=item
-                        county=str(j)
+                        county=cities[i][j]
                         r1=1
                         final_slot = slot1
 
@@ -34,15 +34,14 @@ def slot_match_0(text):
             if(re.search(item,text)!=None):
                 city=item
                 county=None
-                r1=1
+                r1=2
                 final_slot = slot2
     elif(re.search(slot3,text)!=None):
         city=None
         county = None
-        r1 = 1
         final_slot = slot3
 
-    return bool(r1), city ,county ,final_slot
+    return r1, city ,county ,final_slot
 
 def slot_match_1(text):
     global final_slot
@@ -50,6 +49,7 @@ def slot_match_1(text):
     global r1
     final_slot =None
     city=None
+    district=None
     slot1="中高风险地区"
     slot2="防疫政策"
     slot3="没有问题"
@@ -58,7 +58,7 @@ def slot_match_1(text):
 
         for i in range(length):
             item=str(cities[i][0])
-            if(re.search(item,text)!=None):
+            if(re.search(item,text)!=None ):
                 city=item
                 r1=1
                 final_slot = slot1
@@ -68,11 +68,12 @@ def slot_match_1(text):
             item=str(cities[i][0])
             if(re.search(item,text)!=None):
                 city=item
-                r1=1
+                r1=2
                 final_slot = slot2
     elif(re.search(slot3,text)!=None):
         city=None
-        r1 = 1
+        r1 = 0
         final_slot = slot3
 
-    return bool(r1), city ,final_slot
+    return r1, city ,final_slot
+
